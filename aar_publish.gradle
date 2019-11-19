@@ -1,16 +1,17 @@
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
-version = "1.0.2"
+version = "1.0.0"
 
-def siteUrl = 'https://github.com/BelongsH/APTExample'      // 项目的主页
-def gitUrl = 'https://github.com/BelongsH/APTExample.git'   // Git仓库的url
-group = "com.belongs.apt.compiler2"                                        // Maven Group ID for the artifact，一般填你唯一的包名
+def siteUrl = 'https://github.com/BelongsH/APTDemo'      // 项目的主页
+def gitUrl = 'https://github.com/BelongsH/APTDemo.git'   // Git仓库的url
+group = "com.belongs.apt.demo.core"                                    // Maven Group ID for the artifact，一般填你唯一的包名
+
 install {
     repositories.mavenInstaller {
         pom {
             project {
-                packaging 'jar'
+                packaging 'aar'
                 name 'test upload'
                 url siteUrl
                 licenses {
@@ -36,12 +37,37 @@ install {
     }
 }
 task sourcesJar(type: Jar) {
-    from sourceSets.main.allSource
+    from android.sourceSets.main.java.srcDirs
     classifier = 'sources'
 }
-artifacts {
-    archives sourcesJar
+//生成文档
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    options.encoding "UTF-8"
+    options.charSet 'UTF-8'
+    options.author true
+    options.version true
+    options.links "https://github.com/JayZhaoCN"
+    failOnError false
 }
+//文档打包成jar
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+////拷贝javadoc文件
+//task copyDoc(type: Copy) {
+//    from "${buildDir}/docs/"
+//    into "docs"
+//}
+////上传到jCenter所需要的源码文件
+//artifacts {
+//    archives javadocJar
+//    archives sourcesJar
+//}
+
+//
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
 bintray {
@@ -50,7 +76,7 @@ bintray {
     configurations = ['archives']
     pkg {
         repo = "maven"
-        name = "compilerDemo2"   //发布到JCenter上的项目名字
+        name = "aptDemoCore"   //发布到JCenter上的项目名字
         websiteUrl = siteUrl
         vcsUrl = gitUrl
         licenses = ["Apache-2.0"]

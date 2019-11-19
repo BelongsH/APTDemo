@@ -1,11 +1,11 @@
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
-version = "1.0.2"
+version = "1.0.0"
 
-def siteUrl = 'https://github.com/BelongsH/APTExample'      // 项目的主页
-def gitUrl = 'https://github.com/BelongsH/APTExample.git'   // Git仓库的url
-group = "com.belongs.apt.compiler2"                                        // Maven Group ID for the artifact，一般填你唯一的包名
+def siteUrl = 'https://github.com/BelongsH/APTDemo'      // 项目的主页
+def gitUrl = 'https://github.com/BelongsH/APTDemo.git'   // Git仓库的url
+group = "com.belongs.apt.demo.compiler"                                        // Maven Group ID for the artifact，一般填你唯一的包名
 install {
     repositories.mavenInstaller {
         pom {
@@ -50,7 +50,7 @@ bintray {
     configurations = ['archives']
     pkg {
         repo = "maven"
-        name = "compilerDemo2"   //发布到JCenter上的项目名字
+        name = "aptDemoCompiler"   //发布到JCenter上的项目名字
         websiteUrl = siteUrl
         vcsUrl = gitUrl
         licenses = ["Apache-2.0"]
