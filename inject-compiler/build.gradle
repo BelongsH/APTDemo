@@ -1,0 +1,19 @@
+apply plugin: 'java-library'
+apply from: "${project.rootDir.path}/jar_publish.gradle"
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.google.auto.service:auto-service:1.0-rc4'
+    annotationProcessor 'com.google.auto.service:auto-service:1.0-rc4'
+    api 'com.squareup:javapoet:1.10.0'
+    implementation project(':inject-annotation')
+}
+
+
+
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+
+sourceCompatibility = "7"
+targetCompatibility = "7"

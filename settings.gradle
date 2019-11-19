@@ -1,0 +1,2 @@
+include ':app', ':inject-annotation', ':inject-compiler', ':inject-core'
+rootProject.name='APTDemo'
